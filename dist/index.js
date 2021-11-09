@@ -1037,12 +1037,18 @@ async function isNextReleaseHealthy(release, app) {
     await exec.exec(`gigalixir ps -a ${app}`, [], options);
   });
 
+  core.info('Go get the releases we have ...');
   const releases = JSON.parse(releasesOutput);
-  return releases.pods.filter((pod) => (Number(pod.version) === release && pod.status === "Healthy")).length >= releases.replicas_desired;
+  const x = releases.pods.filter((pod) => (Number(pod.version) === release && pod.status === "Healthy")).length >= releases.replicas_desired;
+  console.log()
+  core.info(`Here is what I found ${x} ...`);
+  return x
 }
 
 async function waitForNewRelease(oldRelease, app, attempts) {
   const maxAttempts = 60;
+
+  core.info(`waitForNewRelease with oldRelease? ${oldRelease} ...`);
 
   if (await isNextReleaseHealthy(oldRelease + 1, app)) {
     return await Promise.resolve(true);
