@@ -1046,7 +1046,7 @@ async function isNextReleaseHealthy(release, app) {
 }
 
 async function waitForNewRelease(oldRelease, app, attempts) {
-  const maxAttempts = 60;
+  const maxAttempts = 80;
 
   core.info(`waitForNewRelease with oldRelease? ${oldRelease} ...`);
 
