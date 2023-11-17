@@ -89,6 +89,10 @@ async function run() {
     const migrations = core.getInput('MIGRATIONS', {required: true});
     const sshPrivateKey = core.getInput('SSH_PRIVATE_KEY', {required: JSON.parse(migrations)});
 
+    await core.group("Installing six", async () => {
+      await exec.exec('pip3 install six')
+    });
+
     await core.group("Installing gigalixir", async () => {
       await exec.exec('pip3 install gigalixir')
     });
